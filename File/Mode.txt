@@ -1,0 +1,3 @@
+Standard 10 4 20
+Crazy 20 4 8
+Impossible 20 4 3
