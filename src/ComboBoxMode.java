@@ -9,14 +9,12 @@ public class ComboBoxMode extends JComboBox<String> {
 
     private String path;
     private RoundMode roundMode;
-    private String mode;
 
     ComboBoxMode(){
         new JComboBox<>();
     }
 
     public void addItem(){
-        RoundMode[] roundModes;
         path = System.getProperty("user.dir");
         Scanner scanner;
         String tmp, tmpSplit[];
@@ -31,7 +29,6 @@ public class ComboBoxMode extends JComboBox<String> {
 
                 addItem(tmpSplit[0]);
                 roundMode = new RoundMode(Integer.valueOf(tmpSplit[1]), Integer.valueOf(tmpSplit[2]), Integer.valueOf(tmpSplit[3]));
-                System.out.println(tmpSplit[0]);
             }
             scanner.close();
         } catch (FileNotFoundException e) {
@@ -40,4 +37,11 @@ public class ComboBoxMode extends JComboBox<String> {
 
     }
 
+    public RoundMode getRoundMode() {
+        return roundMode;
+    }
+
+    public void setRoundMode(RoundMode roundMode) {
+        this.roundMode = roundMode;
+    }
 }
