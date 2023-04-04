@@ -19,9 +19,9 @@ public class ActionBtnStart implements ActionListener {
 
         File directory = new File("img/");
         File[] files = directory.listFiles();
-        int numberImage = files.length - 1;
-
-        get.setRandomNImage((int) (Math.floor(Math.random() * numberImage) + 1)/2);
+        int numberImage = (files.length - 1)/2;
+        System.out.println("image" + numberImage);
+        get.setRandomNImage((int) (Math.floor(Math.random() * numberImage) + 1));
 
         get.updateApp();
         get.getChbAdMode().stopControl();

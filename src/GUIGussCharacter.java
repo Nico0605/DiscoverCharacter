@@ -191,22 +191,29 @@ public class GUIGussCharacter extends JFrame {
     }
 
     private void createPnlAnswers(){
-        pnlAnswer = new JPanel();
-        pnlAnswer.setLayout(null);
-        pnlAnswer.setBounds(0, pnlMatchProgress.getHeight() + pnlImageTimer.getHeight(), getWidth(), (int)(100 + (getHeight() * 0.2)));
-        pnlAnswer.setBackground(Color.RED);
-
-        initializeBtnAnswer();
-
-    }
-
-    private void initializeBtnAnswer(){
         int numberAnswer;
+
         if(chbAdMode.isSelected()){
-            numberAnswer = Integer.valueOf(String.valueOf(cbModeAd[1]));
+            numberAnswer = Integer.parseInt(String.valueOf(cbModeAd[1].getSelectedItem()));
         }else{
             numberAnswer = cbMode.getRoundMode().getNumberAnswer();
         }
+
+        pnlAnswer = new JPanel();
+        if(numberAnswer == 2){
+            pnlAnswer.setLayout(new GridLayout(1,2));
+        } else if (numberAnswer > 2) {
+            pnlAnswer.setLayout(new GridLayout(2, 2));
+        }
+
+        pnlAnswer.setBounds(0, pnlMatchProgress.getHeight() + pnlImageTimer.getHeight(), getWidth(), (int)(100 + (getHeight() * 0.2)));
+        pnlAnswer.setBackground(Color.RED);
+
+        initializeBtnAnswer(numberAnswer);
+
+    }
+
+    private void initializeBtnAnswer(int numberAnswer){
 
         btnAnswer = new ButtonsAnswers[numberAnswer];
         System.out.println(numberAnswer);
@@ -214,6 +221,9 @@ public class GUIGussCharacter extends JFrame {
             btnAnswer[i] = new ButtonsAnswers(this);
         }
         btnAnswer = ButtonsAnswers.addAnswers(numberAnswer);
+        for (int i = 0; i < btnAnswer.length; i++) {
+            pnlAnswer.add(btnAnswer[i]);
+        }
     }
 
     private void createPnlHomeNext(){
@@ -222,7 +232,16 @@ public class GUIGussCharacter extends JFrame {
         pnlHomeNext.setBounds(0, pnlMatchProgress.getHeight() + pnlImageTimer.getHeight() + pnlAnswer.getHeight(), getWidth(),
                 getHeight() - (pnlMatchProgress.getHeight() + pnlImageTimer.getHeight() + pnlAnswer.getHeight()));
 
-        pnlHomeNext.setBackground(Color.BLUE);
+        btnHome = new JButton("Home");
+        btnHome.setBounds((getWidth()/2) - 150,0,150, 70);
+        btnHome.addActionListener(new ActionBtnHomeNext(this));
+
+        btnNext = new JButton("Next");
+        btnNext.setBounds((getWidth()/2) + 150,0,150, 70);
+        btnNext.addActionListener(new ActionBtnHomeNext(this));
+
+        pnlHomeNext.add(btnHome);
+        pnlHomeNext.add(btnNext);
     }
 
     /*-------------------------------------------------Config app-----------------------------------------------------*/
@@ -340,9 +359,15 @@ public class GUIGussCharacter extends JFrame {
                 pnlImageTimer.setBounds(0, sizeBar.height, getWidth(), getHeight() - 300);
 
                 pnlAnswer.setBounds(0, pnlMatchProgress.getHeight() + pnlImageTimer.getHeight(), getWidth(), (int)(100 + (getHeight() * 0.1)));
+
                 pnlHomeNext.setBounds(0, pnlMatchProgress.getHeight() + pnlImageTimer.getHeight() + pnlAnswer.getHeight(), getWidth(),
                         getHeight() - (pnlMatchProgress.getHeight() + pnlImageTimer.getHeight() + pnlAnswer.getHeight()));
 
+
+                btnNext.setBounds((getWidth()/2),(pnlHomeNext.getHeight()/2) - (btnNext.getHeight()/2) - 15,150, 70);
+                btnHome.setBounds((getWidth()/2) - 150,(pnlHomeNext.getHeight()/2) - (btnHome.getHeight()/2) - 15,150, 70);
+
+                System.out.println(" btn home" + ((pnlHomeNext.getHeight()/2) - (btnNext.getHeight()/2)) + " btn next" + ((pnlHomeNext.getHeight()/2) - (btnHome.getHeight()/2)));
             }
         });
     }

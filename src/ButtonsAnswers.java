@@ -25,7 +25,7 @@ public class ButtonsAnswers extends JButton{
         Scanner scanner;
         ButtonsAnswers[] btnTmp = new ButtonsAnswers[numberAnswer];
         Vector<String> tmp = new Vector<>();
-        int randomNumberTrue, randomNumberFalse;
+        int randomIndex, randomNumberFalse;
         //creo una strategia di per inserire i nomi all'interno dei bottoni, sicuramente in un modo random
         //la risposta giusta deve essere sempre in un bottone differente
         //faccio un math.random e un numero da 0 a numberAnswer il numero che esce sara l'indice in cui metterò la risposta giusta
@@ -40,30 +40,30 @@ public class ButtonsAnswers extends JButton{
                 tmp.add(scanner.nextLine());
             }
 
-            randomNumberTrue = (int)Math.floor(Math.random() * numberAnswer);
-            System.out.println("True" + randomNumberTrue);
+            randomIndex = (int)Math.floor(Math.random() * numberAnswer);
+            System.out.println("True" + randomIndex);
 
 
             for (int i = 0; i < btnTmp.length; i++) {
                 btnTmp[i] = new ButtonsAnswers();
             }
-            System.out.println("tmp size" + tmp.size() + " random number" + get.getRandomNImage());
-            if(get.getRandomNImage() == 0){
-                btnTmp[randomNumberTrue].setName(tmp.get(get.getRandomNImage()));
-            }else {
-                btnTmp[randomNumberTrue].setName(tmp.get(get.getRandomNImage() - 1));
-            }
 
+            System.out.println("tmp size" + tmp.size() + " random number" + get.getRandomNImage());
+
+            btnTmp[randomIndex].setText(tmp.get(get.getRandomNImage()));
+
+            System.out.println(btnTmp[randomIndex].getText());
             for (int i = 0; i < btnTmp.length; i++) {
                 System.out.println("fuori if" + i);
-                randomNumberFalse = (int)Math.floor(Math.random() * numberImage);
-                if(i != randomNumberTrue){
+                randomNumberFalse = (int)Math.floor(Math.random() * tmp.size());//tmp.size da sostituire con numberImage
+                if(i != randomIndex){
                     while (randomNumberFalse == get.getRandomNImage()){
-                        randomNumberFalse = (int)Math.floor(Math.random() * numberImage);
+                        randomNumberFalse = (int)Math.floor(Math.random() * tmp.size());//tmp.size da sostituire con numberImage
                     }
                     System.out.println();
-                    System.out.println(i);
-                    btnTmp[i].setName(tmp.get(randomNumberFalse));
+                    System.out.println(tmp.get(randomNumberFalse));
+
+                    btnTmp[i].setText(tmp.get(randomNumberFalse));
                 }
             }
 
